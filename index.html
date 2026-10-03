@@ -34,8 +34,11 @@ canvas{width:100%;height:100%;display:block}
 h1.title{font-size:clamp(42px,9vw,64px);letter-spacing:-.01em;line-height:1.05}
 .tagline{margin:18px auto 0;max-width:440px;color:var(--soft);font-size:17px}
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.btn{display:inline-flex;align-items:center;padding:13px 28px;border-radius:999px;font:700 15px Inter,sans-serif;text-decoration:none;background:#fff;color:#000;transition:.2s}
+.btn{display:inline-flex;align-items:center;padding:13px 28px;border-radius:999px;font:700 15px Inter,sans-serif;text-decoration:none;background:#fff;color:#000;transition:.2s;border:0;cursor:pointer}
 .btn:hover{background:#d8d8d8;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:#fff;border:1px solid #444}
+.btn.ghost:hover{background:#fff;color:#000;border-color:#fff}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
 .meta{margin-top:20px;color:var(--mute);font-size:13px}
 .dot{opacity:.5;margin:0 7px}
 
@@ -71,6 +74,26 @@ section{padding:16px 0}
 .keycard h2{font-size:28px;margin-bottom:10px}
 .keycard p{color:var(--soft);font-size:15px;margin:0 0 26px}
 .fine{margin-top:18px;color:var(--mute);font-size:13px}
+
+/* caixa de pedido de chave */
+dialog#ask{width:min(480px,92vw);padding:28px;border:1px solid #333;border-radius:22px;background:#050505;color:#fff;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+dialog#ask::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+dialog#ask h3{font-size:24px;margin-bottom:6px}
+dialog#ask .sub{margin:0 0 20px;color:var(--mute);font-size:14px}
+dialog#ask label{display:block;margin:14px 0 6px;color:var(--soft);font-size:13px;font-weight:600}
+dialog#ask label small{color:var(--mute);font-weight:400}
+dialog#ask input,dialog#ask textarea{width:100%;background:#0a0a0a;color:#fff;border:1px solid #2c2c2c;border-radius:12px;padding:12px 14px;font:15px Inter,sans-serif;transition:border-color .15s}
+dialog#ask textarea{min-height:110px;resize:vertical}
+dialog#ask input:focus,dialog#ask textarea:focus{outline:0;border-color:#fff}
+dialog#ask .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dialog#ask .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+dialog#ask .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+dialog#ask .status{min-height:20px;margin-top:14px;font-size:13px;color:var(--mute)}
+dialog#ask .status.err{color:#ff7a7a}
+dialog#ask .done{text-align:center;padding:14px 0 4px}
+dialog#ask .done p{color:var(--soft);margin:8px 0 20px}
+dialog#ask .tick{width:54px;height:54px;border-radius:50%;border:1.5px solid #fff;display:grid;place-items:center;margin:0 auto 14px;font-size:24px}
+@media (max-width:480px){dialog#ask .two{grid-template-columns:1fr}}
 
 footer{padding:50px 0 48px;text-align:center;color:var(--mute);font-size:13px}
 footer .credit{color:var(--soft);font-size:14px;margin-bottom:6px}
@@ -130,10 +153,40 @@ footer .disclaimer{max-width:420px;margin:14px auto 0;opacity:.75}
   <div class="keycard">
     <h2 data-k="kh"></h2>
     <p data-k="kp"></p>
-    <div class="cta-row" style="margin-top:0"><a class="btn" href="https://github.com/hellcathisonfire/hells-temptation-releases/releases/download/v.3.2.0/Hell.s.Temptation-Setup-3.0.2.exe" data-k="kbtn"></a></div>
+    <div class="cta-row" style="margin-top:0">
+      <a class="btn" href="https://github.com/hellcathisonfire/hells-temptation-releases/releases/download/v.3.2.0/Hell.s.Temptation-Setup-3.0.2.exe" data-k="kbtn"></a>
+      <button class="btn ghost" id="askbtn" type="button" data-k="askbtn"></button>
+    </div>
     <div class="fine" data-k="fine"></div>
   </div>
 </div></section>
+
+<dialog id="ask" aria-labelledby="ask-t">
+  <form id="askform" method="dialog" novalidate>
+    <div id="askbody">
+      <h3 id="ask-t" data-k="ah"></h3>
+      <p class="sub" data-k="asub"></p>
+      <label for="a-msg" data-k="amsg"></label>
+      <textarea id="a-msg" maxlength="600" required data-kp="amsgp"></textarea>
+      <div class="two">
+        <div><label for="a-dc" data-k="adc"></label><input id="a-dc" maxlength="40" autocomplete="off" data-kp="adcp"></div>
+        <div><label for="a-em" data-k="aem"></label><input id="a-em" type="email" maxlength="120" autocomplete="email" data-kp="aemp"></div>
+      </div>
+      <input class="hp" id="a-web" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="status" id="astatus" role="status"></div>
+      <div class="actions">
+        <button class="btn ghost" type="button" id="acancel" data-k="acancel"></button>
+        <button class="btn" type="submit" id="asend" data-k="asend"></button>
+      </div>
+    </div>
+    <div class="done" id="askdone" hidden>
+      <div class="tick">✓</div>
+      <h3 data-k="adh"></h3>
+      <p data-k="adp"></p>
+      <button class="btn" type="button" id="aclose" data-k="aclose"></button>
+    </div>
+  </form>
+</dialog>
 
 <footer><div class="wrap">
   <div class="credit" data-k="credit"></div>
@@ -152,7 +205,13 @@ en:{kicker:'a personal project by Hellcath',tagline:'Your adult content catalog 
  f2h:'Discovery',f2p:'"Surprise me" mode picks content from the filters you choose. Shorts from RedGifs and Reddit, with likes and favorites.',
  f3h:'Social',f3p:'Profile with @username, shareable link, friends and messages that self-destruct in 12h — free, inside the app itself.',
  f4h:'Updates',f4p:'After the first install, the app updates itself — no need to download a new installer every time.',
- kh:'Ready to enter?',kp:'Download the installer and create your account inside the app.',kbtn:'Download installer (.exe)',fine:'An access key is required to create your account.',
+ kh:'Ready to enter?',kp:'Download the installer and create your account inside the app.',kbtn:'Download installer (.exe)',askbtn:'Ask for an activation key',fine:'An access key is required to create your account.',
+ ah:'Ask for an activation key',asub:'Tell me a bit about you and how to reach you. I\'ll send your key there.',
+ amsg:'Message',amsgp:'Hi! I\'d like an activation key. A bit about me / how I found the app…',
+ adc:'Discord user',adcp:'username',aem:'Email <small>(optional)</small>',aemp:'you@mail.com',
+ acancel:'Cancel',asend:'Send request',asending:'Sending…',
+ adh:'Request sent',adp:'I\'ll reply to your Discord or email with the key as soon as I can.',aclose:'Close',
+ e_msg:'Write a short message (at least 5 characters).',e_contact:'Add your Discord user or your email so I can reply.',e_discord:'That Discord user doesn\'t look right.',e_email:'That email doesn\'t look right.',e_rate:'Too many requests. Try again in a while.',e_net:'Couldn\'t send right now. Please try again.',
  credit:"Hell's Temptation — made by <b>Hellcath</b>",disc:"Hell's Temptation organizes links to third-party sites; it does not host, produce or distribute any content of its own. Personal use, 18+."},
 pt:{kicker:'um projeto pessoal de Hellcath',tagline:'Seu catálogo de conteúdo adulto — organizado, rápido, e só seu.',cta:'Baixar para Windows',
  meta:'v3.0.2 <span class="dot">·</span> Windows <span class="dot">·</span> instalador protegido',l1:'O que é',
@@ -162,15 +221,52 @@ pt:{kicker:'um projeto pessoal de Hellcath',tagline:'Seu catálogo de conteúdo 
  f2h:'Descoberta',f2p:'Modo "Surpreenda-me" sorteia conteúdo pelos filtros que você escolher. Shorts com RedGifs e Reddit, com like e favoritos.',
  f3h:'Social',f3p:'Perfil com @usuário, link compartilhável, amigos e mensagens que se autodestroem em 12h — de graça, dentro do próprio app.',
  f4h:'Atualizações',f4p:'Depois da primeira instalação, o app se atualiza sozinho — sem baixar um novo instalador toda vez.',
- kh:'Pronto pra entrar?',kp:'Baixe o instalador e crie sua conta dentro do app.',kbtn:'Baixar instalador (.exe)',fine:'Precisa de uma chave de acesso para criar sua conta.',
+ kh:'Pronto pra entrar?',kp:'Baixe o instalador e crie sua conta dentro do app.',kbtn:'Baixar instalador (.exe)',askbtn:'Pedir uma chave de ativação',fine:'Precisa de uma chave de acesso para criar sua conta.',
+ ah:'Pedir uma chave de ativação',asub:'Conte um pouco sobre você e como falar contigo. Eu envio sua chave por lá.',
+ amsg:'Mensagem',amsgp:'Oi! Quero uma chave de ativação. Um pouco sobre mim / como conheci o app…',
+ adc:'Usuário do Discord',adcp:'usuario',aem:'E-mail <small>(opcional)</small>',aemp:'voce@email.com',
+ acancel:'Cancelar',asend:'Enviar pedido',asending:'Enviando…',
+ adh:'Pedido enviado',adp:'Vou responder no seu Discord ou e-mail com a chave assim que puder.',aclose:'Fechar',
+ e_msg:'Escreva uma mensagem curta (mínimo 5 caracteres).',e_contact:'Coloque seu usuário do Discord ou seu e-mail para eu poder responder.',e_discord:'Esse usuário do Discord não parece certo.',e_email:'Esse e-mail não parece certo.',e_rate:'Muitos pedidos. Tente de novo mais tarde.',e_net:'Não consegui enviar agora. Tente novamente.',
  credit:"Hell's Temptation — criado por <b>Hellcath</b>",disc:"Hell's Temptation organiza links para sites de terceiros; não hospeda, produz ou distribui conteúdo próprio. Uso pessoal, +18."}
 };
-function setLang(l){document.documentElement.lang=l==='pt'?'pt-BR':'en';
+var LANG='en';
+function setLang(l){LANG=l;document.documentElement.lang=l==='pt'?'pt-BR':'en';
   document.querySelectorAll('[data-k]').forEach(function(e){e.innerHTML=T[l][e.dataset.k]});
+  document.querySelectorAll('[data-kp]').forEach(function(e){e.placeholder=T[l][e.dataset.kp]});
   document.getElementById('l-en').classList.toggle('on',l==='en');document.getElementById('l-pt').classList.toggle('on',l==='pt')}
 document.getElementById('l-en').onclick=function(){setLang('en')};
 document.getElementById('l-pt').onclick=function(){setLang('pt')};
 setLang('en');
+
+/* Pedido de chave: manda para o Worker (que guarda e avisa no seu Discord) */
+(function(){
+  var API='https://hells-temptation-keys.ezequielbrazpro1.workers.dev/keyrequest';
+  var dlg=document.getElementById('ask'),form=document.getElementById('askform'),body=document.getElementById('askbody'),done=document.getElementById('askdone'),
+      st=document.getElementById('astatus'),send=document.getElementById('asend');
+  function $(id){return document.getElementById(id)}
+  function err(k){st.className='status err';st.textContent=T[LANG][k]}
+  function reset(){body.hidden=false;done.hidden=true;st.className='status';st.textContent='';send.disabled=false;send.textContent=T[LANG].asend}
+  $('askbtn').onclick=function(){reset();dlg.showModal();setTimeout(function(){$('a-msg').focus()},30)};
+  $('acancel').onclick=$('aclose').onclick=function(){dlg.close()};
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var msg=$('a-msg').value.trim(),dc=$('a-dc').value.trim().replace(/^@/,''),em=$('a-em').value.trim();
+    if(msg.length<5)return err('e_msg');
+    if(!dc&&!em)return err('e_contact');
+    if(dc&&!/^[\w.#\-]{2,40}$/.test(dc))return err('e_discord');
+    if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em))return err('e_email');
+    send.disabled=true;send.textContent=T[LANG].asending;st.className='status';st.textContent='';
+    fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message:msg,discord:dc,email:em,website:$('a-web').value})})
+      .then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,j:j}})})
+      .then(function(x){
+        if(x.ok&&x.j.ok){body.hidden=true;done.hidden=false;form.reset();return}
+        send.disabled=false;send.textContent=T[LANG].asend;
+        var m={message:'e_msg',contact:'e_contact',discord:'e_discord',email:'e_email',rate:'e_rate'};err(m[x.j.error]||'e_net')})
+      .catch(function(){send.disabled=false;send.textContent=T[LANG].asend;err('e_net')});
+  });
+})();
 
 /* Banner espacial: nave, estrelas e planetas em paralaxe */
 (function(){
