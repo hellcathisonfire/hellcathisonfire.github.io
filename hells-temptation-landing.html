@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hell's Temptation</title>
+<meta name="description" content="Hell's Temptation — catálogo pessoal de conteúdo adulto, organizado por categorias, atrizes e atores. Criado por Hellcath." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0410'/%3E%3Cpath d='M30 38 C26 22 40 14 40 28 C40 34 34 36 32 40Z' fill='%23e23fc9'/%3E%3Cpath d='M70 38 C74 22 60 14 60 28 C60 34 66 36 68 40Z' fill='%23e23fc9'/%3E%3Ccircle cx='50' cy='58' r='21' fill='none' stroke='%238b3bf0' stroke-width='4'/%3E%3Cpath d='M50 49 a7 7 0 1 0 0.1 0 M46.5 58 L53.5 58 L51.5 70 L48.5 70 Z' fill='%23ff6d45'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg-0:#0b0410;
+    --bg-1:#1c0720;
+    --surface:#170a1f;
+    --surface-2:#200c28;
+    --line:rgba(255,255,255,.09);
+    --magenta:#e23fc9;
+    --purple:#8b3bf0;
+    --coral:#ff6d45;
+    --text:#f3ecf7;
+    --muted:#ad93c4;
+    --muted-2:#8572a0;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;background:var(--bg-0);}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(139,59,240,.22), transparent 60%),
+      radial-gradient(45% 30% at 85% 8%, rgba(226,63,201,.14), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 38%, var(--bg-0) 75%);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  /* grain overlay */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    opacity:.035;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index:1;
+  }
+  a{color:inherit;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;margin:0;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--magenta);color:#fff;}
+  :focus-visible{outline:2px solid var(--magenta);outline-offset:3px;border-radius:4px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 72px;
+    text-align:center;
+  }
+  .mark-wrap{
+    position:relative;
+    width:112px;height:112px;
+    margin:0 auto 32px;
+  }
+  .mark-glow{
+    position:absolute;inset:-30px;
+    background:radial-gradient(circle, rgba(226,63,201,.55), rgba(139,59,240,.25) 45%, transparent 70%);
+    filter:blur(6px);
+    border-radius:50%;
+    animation:pulse 3.2s ease-in-out infinite;
+  }
+  .mark{
+    position:relative;
+    width:112px;height:112px;
+    border-radius:28px;
+    background:linear-gradient(160deg, #150820, #0a0310);
+    border:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;
+    transform:scale(.85);
+    animation:appear .9s cubic-bezier(.2,.8,.2,1) forwards .15s;
+  }
+  .mark svg{width:62px;height:62px;}
+  @keyframes appear{to{opacity:1;transform:scale(1);}}
+  @keyframes pulse{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:.9;transform:scale(1.08);}}
+
+  .kicker{
+    color:var(--muted-2);
+    font-size:13.5px;
+    letter-spacing:.01em;
+    margin-bottom:14px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards .5s;
+  }
+  h1.title{
+    font-size:clamp(40px,8vw,58px);
+    letter-spacing:-.01em;
+    background:linear-gradient(100deg,#fbeaff 0%,var(--magenta) 45%,var(--coral) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;
+    animation:fadeUp .8s ease forwards .6s;
+  }
+  .tagline{
+    margin:18px auto 0;
+    max-width:440px;
+    color:var(--muted);
+    font-size:17px;
+    opacity:0;
+    animation:fadeUp .8s ease forwards .75s;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .cta-row{
+    display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+    margin-top:36px;
+    opacity:0;
+    animation:fadeUp .8s ease forwards .9s;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;
+    border-radius:999px;
+    font-size:15px;font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn:active{transform:translateY(0);}
+  .btn-primary{
+    background:linear-gradient(100deg,var(--magenta),var(--purple));
+    color:#fff;
+    box-shadow:0 8px 24px -8px rgba(226,63,201,.55);
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{
+    background:rgba(255,255,255,.04);
+    border-color:var(--line);
+    color:var(--text);
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,.07);}
+  .meta{
+    margin-top:22px;
+    color:var(--muted-2);
+    font-size:13px;
+    opacity:0;
+    animation:fadeUp .8s ease forwards 1.05s;
+  }
+  .dot{opacity:.5;margin:0 7px;}
+
+  /* ---------- section shell ---------- */
+  section{position:relative;z-index:2;padding:16px 0;}
+  .section-inner{padding:48px 0;}
+  .label{
+    color:var(--coral);
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .lede{
+    font-size:18px;
+    color:#ddd2e6;
+    max-width:560px;
+  }
+  .lede b{color:var(--text);font-weight:600;}
+
+  /* ---------- mock UI card ---------- */
+  .mock{
+    margin-top:40px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,var(--surface),var(--surface-2));
+    overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .mock-bar{
+    display:flex;gap:7px;
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+  }
+  .mock-bar span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.14);}
+  .mock-body{display:flex;}
+  .mock-rail{
+    width:48px;
+    padding:16px 0;
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+    border-right:1px solid var(--line);
+  }
+  .mock-rail i{width:18px;height:18px;border-radius:6px;background:rgba(255,255,255,.12);display:block;}
+  .mock-rail i:first-child{background:linear-gradient(135deg,var(--magenta),var(--purple));}
+  .mock-grid{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    padding:18px;
+  }
+  .mock-tile{
+    aspect-ratio:4/3;
+    border-radius:10px;
+    position:relative;
+    display:flex;align-items:flex-end;
+    padding:8px;
+    font-size:11px;
+    font-weight:600;
+    color:rgba(255,255,255,.88);
+    overflow:hidden;
+  }
+  .mock-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 55%);}
+  .mock-tile span{position:relative;z-index:1;}
+  .t1{background:linear-gradient(135deg,#5b2a8f,#c23fb0);}
+  .t2{background:linear-gradient(135deg,#3a2a7a,#7b3bf0);}
+  .t3{background:linear-gradient(135deg,#8a2fae,#ff6d45);}
+  .t4{background:linear-gradient(135deg,#2a1f55,#5b3ac9);}
+  .t5{background:linear-gradient(135deg,#7a1f6e,#e23fc9);}
+  .t6{background:linear-gradient(135deg,#1f2a55,#3f6dc9);}
+  .mock-note{
+    text-align:center;
+    color:var(--muted-2);
+    font-size:13px;
+    margin-top:14px;
+  }
+
+  /* ---------- guest list (features) ---------- */
+  .list{margin-top:36px;}
+  .row{
+    display:flex;gap:18px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .row:last-child{border-bottom:1px solid var(--line);}
+  .row .bullet{
+    flex:none;
+    width:9px;height:9px;
+    margin-top:8px;
+    background:linear-gradient(135deg,var(--magenta),var(--coral));
+    transform:rotate(45deg);
+    border-radius:2px;
+  }
+  .row h3{font-size:19px;color:var(--text);margin-bottom:6px;font-weight:500;}
+  .row p{margin:0;color:var(--muted);font-size:15px;max-width:500px;}
+
+  /* ---------- download / keycard ---------- */
+  .keycard{
+    margin-top:8px;
+    border-radius:22px;
+    padding:38px 32px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(226,63,201,.18), transparent 55%),
+      radial-gradient(120% 140% at 100% 100%, rgba(139,59,240,.22), transparent 55%),
+      var(--surface);
+    border:1px solid var(--line);
+    text-align:center;
+  }
+  .keycard h2{font-size:26px;margin-bottom:10px;}
+  .keycard p{color:var(--muted);font-size:15px;margin:0 0 26px;}
+  .keycard .cta-row{animation:none;opacity:1;margin-top:0;}
+  .fine{margin-top:18px;color:var(--muted-2);font-size:13px;}
+  .fine a{color:var(--coral);text-decoration:none;}
+  .fine a:hover{text-decoration:underline;}
+
+  footer{
+    padding:56px 0 48px;
+    text-align:center;
+    color:var(--muted-2);
+    font-size:13px;
+  }
+  footer .credit{color:var(--muted);font-size:14px;margin-bottom:6px;}
+  footer .credit b{color:var(--text);font-weight:600;}
+  footer .disclaimer{max-width:420px;margin:14px auto 0;opacity:.75;}
+
+  @media (prefers-reduced-motion: reduce){
+    .mark, .kicker, .title, .tagline, .cta-row, .meta, .mark-glow{animation:none !important;opacity:1 !important;transform:none !important;}
+  }
+  @media (max-width:480px){
+    .mock-grid{grid-template-columns:repeat(2,1fr);}
+    .hero{padding:72px 0 56px;}
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="mark-wrap">
+        <div class="mark-glow"></div>
+        <div class="mark">
+          <svg viewBox="0 0 100 100" fill="none">
+            <path d="M30 40 C24 20 42 10 42 27 C42 34 35 37 33 41Z" fill="url(#g1)"/>
+            <path d="M70 40 C76 20 58 10 58 27 C58 34 65 37 67 41Z" fill="url(#g1)"/>
+            <circle cx="50" cy="56" r="23" stroke="url(#g2)" stroke-width="4"/>
+            <circle cx="50" cy="48" r="7.5" fill="#ff6d45"/>
+            <path d="M46 56 L54 56 L51.5 70 L48.5 70 Z" fill="#ff6d45"/>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f05bd6"/>
+                <stop offset="1" stop-color="#b43bd8"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#e23fc9"/>
+                <stop offset="1" stop-color="#8b3bf0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kicker">um projeto pessoal de Hellcath</div>
+      <h1 class="title">Hell's Temptation</h1>
+      <p class="tagline">Seu catálogo de conteúdo adulto — organizado, rápido, e só seu.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#baixar">Baixar para Windows</a>
+      </div>
+      <div class="meta">v3.0.2 <span class="dot">·</span> Windows <span class="dot">·</span> instalador protegido</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap section-inner">
+      <div class="label">O que é</div>
+      <p class="lede">Hell's Temptation reúne suas <b>categorias, atrizes e atores favoritos</b> num só painel — com pastas visuais, pré-visualização, histórico e busca. Nada de abas perdidas ou favoritos bagunçados: tudo organizado do seu jeito, salvo localmente na sua máquina.</p>
+
+      <div class="mock" aria-hidden="true">
+        <div class="mock-bar"><span></span><span></span><span></span></div>
+        <div class="mock-body">
+          <div class="mock-rail">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="mock-grid">
+            <div class="mock-tile t1"><span>Mainstream</span></div>
+            <div class="mock-tile t2"><span>Cosplay</span></div>
+            <div class="mock-tile t3"><span>Hardcore</span></div>
+            <div class="mock-tile t4"><span>Hentai</span></div>
+            <div class="mock-tile t5"><span>JAV</span></div>
+            <div class="mock-tile t6"><span>+ suas pastas</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="mock-note">categorias e pastas reais ficam só no seu app — aqui é só a ideia do painel.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap section-inner">
+      <div class="label">O que vem junto</div>
+
+      <div class="list">
+        <div class="row">
+          <span class="bullet"></span>
+          <div>
+            <h3>Organização</h3>
+            <p>Categorias e pastas visuais com pré-visualização. Atrizes e atores com foto e bio automáticas. Histórico e favoritos, tudo local.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="bullet"></span>
+          <div>
+            <h3>Descoberta</h3>
+            <p>Modo "Surpreenda-me" sorteia conteúdo pelos filtros que você escolher. Shorts com RedGifs e Reddit, com like e favoritos.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="bullet"></span>
+          <div>
+            <h3>Social</h3>
+            <p>Perfil com @usuário, link compartilhável, amigos e mensagens que se autodestroem em 12h — de graça, dentro do próprio app.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="bullet"></span>
+          <div>
+            <h3>Atualizações</h3>
+            <p>Depois da primeira instalação, o app se atualiza sozinho — sem baixar um novo instalador toda vez.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="baixar">
+    <div class="wrap section-inner">
+      <div class="keycard">
+        <h2>Pronto pra entrar?</h2>
+        <p>Baixe o instalador e crie sua conta dentro do app.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/hellcathisonfire/hells-temptation-releases/releases/download/v.3.2.0/Hell.s.Temptation-Setup-3.0.2.exe">Baixar instalador (.exe)</a>
+        </div>
+        <div class="fine">Precisa de uma chave de acesso para criar sua conta.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="credit">Hell's Temptation — criado por <b>Hellcath</b></div>
+      <div>Windows · v3.0.2</div>
+      <p class="disclaimer">Hell's Temptation organiza links para sites de terceiros; não hospeda, produz ou distribui conteúdo próprio. Uso pessoal, +18.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
